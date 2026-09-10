@@ -1,0 +1,36 @@
+#!/bin/env python3
+import os
+from datetime import datetime, timezone
+
+from dotenv import load_dotenv
+from pymongo import MongoClient
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Get MongoDB URI from environment variable
+uri = os.environ.get("MONGODB_URI")
+
+# Create a MongoDB client and connect to the database
+client = MongoClient(uri)
+db = client["bank"]
+accounts = db["accounts"]
+
+# Define the new account document
+new_account = {
+    "account_holder": "Linus Torvalds",
+    "account_id": "MDB829001337",
+    "account_type": "checking",
+    "balance": 50352434,
+    "last_updated": datetime.now(timezone.utc),
+}
+
+# TODO: Insert the new account document into the 'accounts' collection, assign the result to a variable called `result`
+# result =
+
+# Print the inserted document ID
+print(f"Inserted document ID: {result.inserted_id}")
+
+# Close the MongoDB connection
+client.close()
+
