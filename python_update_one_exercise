@@ -1,0 +1,32 @@
+#!/bin/env python3
+import os
+
+from bson import ObjectId
+from dotenv import load_dotenv
+from pymongo import MongoClient
+
+# Load environment variables from .env file
+load_dotenv( dotenv_path="/lab/.env" )
+
+# Get MongoDB URI from environment variable
+uri = os.environ.get("MONGODB_URI")
+
+# Create a MongoDB client and connect to the database
+client = MongoClient(uri)
+db = client["bank"]
+accounts = db["accounts"]
+
+# Filter
+document_to_update = {"_id": ObjectId("62d6e04ecab6d8e130497482")}
+
+# Update
+add_to_balance = {"$inc": {"balance": 100}}
+
+# TODO: Write an expression that updates the document matching the filter in the 'accounts' collection. Assign the result of the operation to a variable named 'result'.
+# result =
+
+# Print the result
+print(f"Matched: {result.matched_count}, Modified: {result.modified_count}")
+
+# Close the MongoDB connection
+client.close()
