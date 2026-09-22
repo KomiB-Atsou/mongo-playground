@@ -1,0 +1,80 @@
+// Helper functions
+
+// The mongoshrc.js file is a JavaScript file that is executed when the MongoDB shell starts.
+// This file is placed in the user's home directory. A copy has been placed in /lab for reference.
+const printStages = (execStages, ident = 0) => {
+  if (!execStages) return;
+  const { stage, inputStage, inputStages, sortPattern, indexName } = execStages;
+  const padding = "  ".repeat(ident);
+
+  let stageLabel = stage;
+  if (stage === "SORT" && sortPattern) {
+    stageLabel = `SORT (${JSON.stringify(sortPattern)})`;
+  } else if (stage === "IXSCAN" && indexName) {
+    stageLabel = `IXSCAN (${indexName})`;
+  }
+
+  stageLabel ? console.log(`${padding}- Stage: ${stageLabel}`) : null;
+  inputStage ? printStages(inputStage, ident + 1) : null;
+  Array.isArray(inputStages)
+    ? inputStages.forEach((s) => printStages(s, ident + 1))
+    : null;
+};
+
+const printRelevantStats = (explain) => {
+  if (explain.length === 0) {
+    print(
+      "No explain information available. Please try moving the explain() call to after the collection name."
+    );
+  }
+  const { executionStats } = explain;
+  const { executionStages } = executionStats;
+  const {
+    executionTimeMillis,
+    totalKeysExamined,
+    totalDocsExamined,
+    nReturned,
+  } = executionStats;
+  console.log(`Execution Time: ${executionTimeMillis} ms`);
+  console.log(`Total Keys Examined: ${totalKeysExamined}`);
+  console.log(`Total Docs Examined: ${totalDocsExamined}`);
+  console.log(`Number of Documents Returned: ${nReturned}`);
+
+  console.log("Execution Stages:");
+  printStages(executionStages);
+  print("");
+};
+
+
+// Get indexes
+db.messages.getIndexes()
+
+const filter = {
+  userId: "user505",
+  timestamp: {
+    $gte: new Date("2025-01-01"),
+    $lte: new Date("2025-02-01")
+  }
+}
+
+let explainOutput = db.messages
+  .find(filter)
+  .sort({ timestamp: -1 })
+  .explain('executionStats');
+
+printRelevantStats(explainOutput);
+
+db.messages.hideIndex("userId_1_category_1_timestamp_1")
+
+// Create new index
+db.messages.createIndex({ userId: 1, timestamp: 1, category: 1 })
+
+let explainOutput = db.messages
+  .find(filter)
+  .sort({ timestamp: -1 })
+  .explain('executionStats');
+
+
+printRelevantStats(explainOutput);
+
+db.messages.dropIndex('userId_1_category_1_timestamp_1')
