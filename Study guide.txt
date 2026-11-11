@@ -10,7 +10,7 @@ Insert
 
 Update
 2.2 Given an update scenario where an entire updated document (no update operators used) is provided, identify the output and how the database changed state.
-2.3 Given an update scenario where $set is used, identify the output and how the database changed state. 4
+2.3 Given an update scenario where $set is used, identify the output and how the database changed state.
 2.4 Given a scenario about updating a document and information about where it should be inserted if it does not exist, identify the upsert command that should be used.
 2.5 Given a scenario where multiple documents need to be updated, identify the correct update expression.
 2.6 Given a findAndModify scenario where another operation is run concurrently, identify the output and how the database changed state.
@@ -39,3 +39,40 @@ Aggregation pipeline
 2.21 Given an aggregation expression using $lookup, identify the correct output.
 2.22 Given an aggregation expression using $out, identify the correct output.
 
+Section 3: INDEXES (17%)
+
+3.1 Given a query that is performing a collection scan, identify which index would improve the performance of this query.
+3.2 Given a query that is performing a collection scan on an equality match on an array field, identify which index would improve the performance of this query.
+3.3 Given a query with no constraint and a sort of two fields that is doing collection scan, identify which index would improve the performance of this query.
+3.4 Given a collection, identify how many indexes exist for that collection.
+3.5 Identify the trade-offs of using indexes and the ramifications of deleting indexes support queries
+3.6 Identify the explain plan outputs that signify a potential performance issue, specifically whether an index is present or not for the given query.
+
+Section 4: DATA MODELING (4%)
+
+4.1 Given a scenario with three collections (a parent and two children) and the user, identify the embedded relationships and which should be linked.
+4.2 Identify data model examples that are considered an anti-pattern.
+
+Section 5: TOOLS AND TOOLING (2%)
+
+5.1 Given a scenario to load Atlas Sample Dataset and then use Data Explorer to use it to find a given first document in a collection
+
+*Section 6: DRIVERS (18%)
+
+Driver definition
+6.1 Define what the XX driver is?
+
+Connection
+6.2 Define how the XX application connects/uses the XXX driver?
+6.3 Define the components of the URI string used by MongoClient to connect the driver to the database.
+6.4 Identify what connection pooling is in terms of the driver and what advantages it offers.
+
+CRUD
+6.5 Identify the correct syntax for the XX driver to insert one document and to insert many documents.
+6.6 Identify the correct syntax for the XX driver to update one document and to update many documents.
+6.7 Identify the correct syntax for the XX driver to delete one document and to delete many documents.
+6.8 Identify the correct syntax for the XX driver to find many documents and to find one document.
+
+Aggregation pipeline
+6.9 Identify the correct syntax for the XX driver to create an aggregation pipeline.
+6.10 Identify the different syntax for the XX driver when using the MongoDB Query Language (MQL) and when using the Aggregation Framework.
