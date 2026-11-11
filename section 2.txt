@@ -1,0 +1,333 @@
+Section 2: CRUD (51%)
+2.1 Given a scenario with a type of structured document that needs to be inserted into a database, identify properly and improperly formed insert commands.
+Q1
+
+Which command correctly inserts a single document?
+
+A. db.users.insertOne({name:"John"})
+ B. db.users.insertMany({name:"John"})
+ C. db.users.updateOne({name:"John"})
+ D. db.users.findOne({name:"John"})
+
+Q2
+
+Which command correctly inserts multiple documents?
+
+A. db.users.insertMany([{name:"John"},{name:"Mary"}])
+ B. db.users.insertOne([{name:"John"},{name:"Mary"}])
+ C. db.users.updateMany([{name:"John"}])
+ D. db.users.find([{name:"John"}])
+
+Q3
+
+What happens if _id is omitted during insertion?
+
+A. Insert fails
+ B. MongoDB generates an ObjectId
+ C. MongoDB generates a UUID
+ D. _id becomes null
+
+Q4
+
+Which command is invalid?
+
+A. insertOne({name:"John"})
+ B. insertMany([{name:"John"}])
+ C. insertOne([{name:"John"}])
+ D. insertMany([{name:"John"},{name:"Mary"}])
+
+Q5
+
+What happens when inserting a document whose _id already exists?
+
+A. Existing document is replaced
+ B. Existing document is updated
+ C. A duplicate key error occurs
+ D. MongoDB automatically changes the _id
+
+2.2 Given an update scenario where an entire updated document (no update operators used) is provided, identify the output and how the database changed state.
+Q1
+
+An update without update operators performs:
+
+A. Merge
+ B. Increment
+ C. Replacement
+ D. Delete
+
+Q2
+
+What happens to fields omitted from the replacement document?
+
+A. Preserved
+ B. Removed
+ C. Archived
+ D. Ignored
+
+Q3
+
+Which operation explicitly performs full-document replacement?
+
+A. replaceOne()
+ B. countDocuments()
+ C. aggregate()
+ D. createIndex()
+
+Q4
+
+What happens to _id during replacement?
+
+A. Always preserved
+ B. Always deleted
+ C. Replaced by ObjectId
+ D. Converted to string
+
+Q5
+
+Given:
+
+JavaScript
+{_id:1,name:"John",age:30}
+
+After:
+
+JavaScript
+replaceOne({_id:1},{name:"Jack"})
+
+What is stored?
+
+A. {_id:1,name:"Jack"}
+ B. {_id:1,name:"Jack",age:30}
+ C. {name:"Jack"}
+ D. Update fails
+
+2.3 Given an update scenario where $set is used, identify the output and how the database changed state.
+Q1
+
+What does $set do?
+
+A. Replaces a document
+ B. Updates specific fields
+ C. Deletes specific fields
+ D. Creates an index
+
+Q2
+
+Does $set preserve unspecified fields?
+
+A. Yes
+ B. No
+ C. Only in Atlas
+ D. Only for embedded documents
+
+Q3
+
+Can $set create a new field?
+
+A. Yes
+ B. No
+ C. Only for arrays
+ D. Only for nested documents
+
+Q4
+
+Which update keeps all other fields unchanged?
+
+A. {$set:{name:"Jack"}}
+ B. {name:"Jack"}
+ C. {$unset:{name:1}}
+ D. {$rename:{name:"Jack"}}
+
+Q5
+
+Can $set update nested fields using dot notation?
+
+A. Yes
+ B. No
+ C. Only for arrays
+ D. Only with aggregation
+
+2.4 Given a scenario about updating a document and information about where it should be inserted if it does not exist, identify the upsert command that should be used.
+Q1
+
+What does "upsert" mean?
+
+A. Update only
+ B. Insert only
+ C. Update or Insert
+ D. Replace and Delete
+
+Q2
+
+Which option enables an upsert?
+
+A. {insert:true}
+ B. {replace:true}
+ C. {upsert:true}
+ D. {merge:true}
+
+Q3
+
+What happens if no document matches and upsert=false?
+
+A. Insert occurs
+ B. Nothing is inserted
+ C. Delete occurs
+ D. Error occurs
+
+Q4
+
+What happens if no document matches and upsert=true?
+
+A. Insert occurs
+ B. Collection is created
+ C. Document is deleted
+ D. Query fails
+
+Q5
+
+Which methods support upsert?
+
+A. updateOne and updateMany
+ B. find only
+ C. aggregate only
+ D. createIndex only
+
+2.5 Given a scenario where multiple documents need to be updated, identify the correct update expression.
+Q1
+
+Which method updates multiple matching documents?
+
+A. updateMany()
+ B. updateOne()
+ C. replaceOne()
+ D. findOne()
+
+Q2
+
+Which field in the result indicates how many documents were modified?
+
+A. deletedCount
+ B. insertedCount
+ C. modifiedCount
+ D. scannedCount
+
+Q3
+
+Can updateMany() modify zero documents?
+
+A. Yes
+ B. No
+ C. Only with upsert
+ D. Only in Atlas
+
+Q4
+
+Does updateMany() stop after the first match?
+
+A. Yes
+ B. No
+ C. Sometimes
+ D. Only on sharded clusters
+
+Q5
+
+Which operator is commonly used with updateMany()?
+
+A. $set
+ B. $group
+ C. $match
+ D. $lookup
+
+2.6 Given a findAndModify scenario where another operation is run concurrently, identify the output and how the database changed state.
+Q1
+
+findAndModify() operations are:
+
+A. Atomic at the document level
+ B. Eventually consistent
+ C. Batch operations
+ D. Non-atomic
+
+Q2
+
+Why is findAndModify() useful?
+
+A. Concurrency control
+ B. Replication setup
+ C. Index management
+ D. Sharding configuration
+
+Q3
+
+Can findAndModify() return the document before modification?
+
+A. Yes
+ B. No
+ C. Only on Atlas
+ D. Only in transactions
+
+Q4
+
+Can findAndModify() return the document after modification?
+
+A. Yes
+ B. No
+ C. Only with replica sets
+ D. Only with aggregation
+
+Q5
+
+Which helper method is commonly preferred today?
+
+A. findOneAndUpdate()
+ B. countDocuments()
+ C. aggregate()
+ D. validate()
+
+2.7 Given a scenario where a document should be deleted from the database, identify the delete expression that should be used.
+Q1
+
+Which method deletes a single document?
+
+A. deleteOne()
+ B. removeOne()
+ C. eraseOne()
+ D. drop()
+
+Q2
+
+Which method deletes multiple documents?
+
+A. deleteMany()
+ B. deleteOne()
+ C. updateMany()
+ D. replaceMany()
+
+Q3
+
+What does deleteMany({}) do?
+
+A. Deletes all documents in the collection
+ B. Drops the collection
+ C. Drops the database
+ D. Deletes one document
+
+Q4
+
+What happens if no document matches the filter?
+
+A. Error occurs
+ B. No documents are deleted
+ C. The collection is dropped
+ D. An upsert occurs
+
+Q5
+
+Which statement deletes a document by _id?
+
+A. deleteOne({_id:id})
+ B. drop({_id:id})
+ C. removeIndex({_id:id})
+ D. aggregate({_id:id})
+
